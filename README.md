@@ -2,6 +2,8 @@
 
 **Full throttle. Losing speed. Why?**
 
+![CI](https://github.com/jabolos10/clipwatch/actions/workflows/ci.yml/badge.svg)
+
 In 2026, Formula 1 cars became roughly half electric, and they are starving for energy. On long straights the battery runs dry, part of the engine's power is diverted to recharge it, and the car **slows down while the driver is still flat on the throttle**. The paddock calls it *super clipping*, and it is one of the defining stories of the 2026 season.
 
 ClipWatch finds it automatically in real F1 telemetry.
