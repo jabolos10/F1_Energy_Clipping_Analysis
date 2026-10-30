@@ -1,7 +1,8 @@
-import requests
-import pandas as pd
-from clipwatch.detect import find_clipping
 import matplotlib.pyplot as plt
+import pandas as pd
+import requests
+
+from clipwatch.detect import find_clipping
 
 BASE = "https://api.openf1.org/v1"
 SESSION = 11230      #qualifications in Australia 2026
@@ -42,7 +43,7 @@ ax2.plot(tel["distance"], tel["throttle"])
 ax2.set_ylabel("Throttle [%]")
 ax3.plot(tel["distance"], tel["brake"])
 ax3.set_ylabel("Brake [%]")
-ax2.set_xlabel("Distance [m]")
+ax3.set_xlabel("Distance [m]")
 
 print(find_clipping(tel))
 
