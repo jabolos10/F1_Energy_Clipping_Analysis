@@ -1,9 +1,16 @@
-name: CI
+name: CI/CD
 
 on:
   push:
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"    # every Monday 06:00 UTC, after the race weekend
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   test:
@@ -27,4 +34,38 @@ jobs:
 
       - name: Tests (pytest)
         run: python -m pytest
+        
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{  steps.deployment.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build site from latest F1 telemetry
+        run: python -m scripts.build_site
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
         

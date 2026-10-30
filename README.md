@@ -1,5 +1,4 @@
-# ClipWatch
-
+# F1 Energy Clipping
 **Full throttle. Losing speed. Why?**
 
 ![CI](https://github.com/jabolos10/clipwatch/actions/workflows/ci.yml/badge.svg)
