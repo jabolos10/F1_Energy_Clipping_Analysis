@@ -1,11 +1,13 @@
-# F1 Energy Clipping
+# F1 Energy Clipping Analysis
 **Full throttle. Losing speed. Why?**
 
-![CI](https://github.com/jabolos10/clipwatch/actions/workflows/ci.yml/badge.svg)
+![CI/CD](https://github.com/jabolos10/F1_Energy_Clipping_Analysis/actions/workflows/ci.yml/badge.svg)
+
+  **Live results:** [jabolos10.github.io/F1_Energy_Clipping_Analysis](https://jabolos10.github.io/F1_Energy_Clipping_Analysis/), rebuilt automatically after every Grand Prix.
 
 In 2026, Formula 1 cars became roughly half electric, and they are starving for energy. On long straights the battery runs dry, part of the engine's power is diverted to recharge it, and the car **slows down while the driver is still flat on the throttle**. The paddock calls it *super clipping*, and it is one of the defining stories of the 2026 season.
 
-ClipWatch finds it automatically in real F1 telemetry.
+This project finds it automatically in real F1 telemetry for every driver and publishes the results after each race weekend.
 
 ---
 
@@ -31,18 +33,22 @@ That is not driver error, and it is not drag. It is the hybrid system harvesting
 ## Why it matters
 
 - **Energy management decides lap time in 2026.** Pole laps are roughly 1.5 to 4 seconds slower than in 2025, depending on the circuit.
-- **The FIA changed the rules mid-season.** From the Miami GP onwards, teams can harvest less energy per lap, but super clipping may charge harder. The stated goal is to cut super clipping from around 8 seconds to 3–4 seconds per lap. ClipWatch is built to check that claim with data.
+- **The FIA changed the rules mid-season.** From the Miami GP onwards, teams can harvest less energy per lap, but super clipping may charge harder. The stated goal is to cut super clipping from around 8 seconds to 3–4 seconds per lap. This project is built to check that claim with data.
 - **The same problem exists on the road.** Deciding where to spend and where to recover battery energy is the same challenge hybrid and electric road cars face.
 
 ## Roadmap
 
 - [x] Telemetry exploration: clipping visible in Melbourne qualifying
 - [x] `find_clipping()` detector
-- [ ] Unit tests on synthetic telemetry (pytest)
-- [ ] CI: linting (ruff) and tests on every push and pull request (GitHub Actions)
-- [ ] CD: results site auto-built and deployed to GitHub Pages after every Grand Prix
-- [ ] Team-by-team clipping comparison
+- [x] Unit tests on synthetic telemetry (pytest)
+- [x] CI: linting (ruff) and tests on every push and pull request (GitHub Actions)
+- [x] CD: results site auto-built and deployed to GitHub Pages after every Grand Prix
+- [x] Driver-by-driver clipping ranking and track map of clipping zones
 - [ ] Before vs after the Miami rule change
+- [ ] Results archive for every 2026 qualifying session
+
+## CI/CD pipeline
+
 
 ## Tech
 
@@ -55,6 +61,8 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python -m scripts.explore
+python -m scripts.build_site
+python -m pytest
 ```
 
 ---

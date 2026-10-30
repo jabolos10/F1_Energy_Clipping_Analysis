@@ -21,10 +21,18 @@ def find_clipping(tel, min_loss=5.0, full_throttle=98):
             loss = peak_speed - end_speed
 
             if loss >= min_loss:      #if difference in km/h is bigger than 5km/h for full throttle
+                
+                # time lost: actual time from peak to end due to clipping vs holding peak speed
+                part = tel.loc[peak:seg.index[-1]]  #time from peak to end
+                ds = part["distance"].diff().iloc[1:] #distance between readings
+                actual = (ds / (part["speed"].iloc[1:] / 3.6)).sum()
+                ideal = ds.sum() / (peak_speed / 3.6) 
+
                 results.append({
                     "start_m": round(tel.loc[peak, "distance"]),
                     "end_m": round(seg["distance"].iloc[-1]),
                     "loss_kmh": round(loss),
+                    "time_lost_s": round(actual - ideal, 3),
                 })
 
             start = None   #distance closed, we are searching for the new one

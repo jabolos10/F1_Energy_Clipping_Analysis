@@ -1,6 +1,7 @@
 import pandas as pd
+import pytest
 
-from clipwatch.detect import find_clipping
+from f1clip.detect import find_clipping
 
 
 def make_tel(speed, throttle, brake):
@@ -20,6 +21,7 @@ def test_detects_clipping():
     assert result[0]["loss_kmh"] == 30
     assert result[0]["start_m"] == 150    #peak in the 4th reading: 3* 50
     assert result[0]["end_m"] == 300
+    assert result[0]["time_lost_s"] == pytest.approx(0.114, abs=0.001)
 
 def test_braking_is_not_clipping():
     tel = make_tel([320, 300, 250, 200], [0]*4, [100]*4)
